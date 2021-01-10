@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import urllib
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ SECRET_KEY = '*brhk-1)^zwsg9e$-=81k5w2x8%3!p9r7^9c+9q=4n-4xjf#%@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS =  ['15.207.100.177']
+ALLOWED_HOSTS =  ['15.207.100.177','0.0.0.0']
 
 
 # Application definition
@@ -73,13 +73,26 @@ WSGI_APPLICATION = 'AutomateProgress.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'djongo',
+#         'NAME': 'AutomateProgress',
+#         'HOST':'mongodb+srv://sai:sai2604@automateprogress.bz2qt.mongodb.net/AutomateProgress?retryWrites=true&w=majority',
+#         'USER': 'sai',
+#         'PASSWORD': 'sai2604',
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
+       'default': {
+           'ENGINE': 'djongo',
+           'NAME': 'AutomateProgress',
+           # /'HOST':'mongodb+srv://sai:<password>@automateprogress.bz2qt.mongodb.net/AutomateProgress?retryWrites=true&w=majority',
+          'HOST':'mongodb+srv://sai:sai2604@automateprogress.bz2qt.mongodb.net/AutomateProgress?retryWrites=true&w=majority',
+          # 'host': 'mongodb+srv://user:' + urllib.parse.quote_plus('password') + '@xx-xxxxx.mongodb.net/test?retryWrites=true&w=majority',
+          'USER': 'sai',
+          'PASSWORD': 'sai2604',
+       }
+   }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
