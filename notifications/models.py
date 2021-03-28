@@ -1,5 +1,5 @@
 from djongo import models
-
+from jsonfield import JSONField
 class User(models.Model):
 	_objectid = models.ObjectIdField()
 	emailid = models.CharField(max_length=50)
@@ -18,3 +18,8 @@ class User(models.Model):
 	github_handle = models.CharField(max_length=50)
 	linkedin_handle = models.CharField(max_length=50)
 
+class WeeklyChange(models.Model):
+	_objectid = models.ObjectIdField() 
+	startdate = models.DateField()
+	enddate = models.DateField()
+	codeforces = JSONField()
