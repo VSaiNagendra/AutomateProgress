@@ -18,5 +18,6 @@ from django.urls import path
 from notifications import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('start/',views.start_view,name = 'start_view')
+    path('start/',views.start_view,name = 'start_view'),
+    path('run/',views.run_view,name='run_view')
 ]
