@@ -4,8 +4,27 @@ from notifications.models import User, WeeklyChange
 from datetime import date,datetime,timedelta
 import urllib,json
 from urllib.request import urlopen,Request
+from django.core import mail
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+from django.core.mail import send_mail
 
 check_status = False
+
+
+def send_email(request):
+	subject = 'Subject is checking mail'
+	html_message = render_to_string('notifications/email.html', {'context': 'values'})
+	plain_message = strip_tags(html_message)
+	email_from = settings.EMAIL_HOST_USER
+	to = ['sainagendra222@gmail.com']
+	send_mail( subject, plain_message, email_from,to, html_message=html_message)
+	return HttpResponse('Request returned')
+
+def email(request):
+	values = {}
+	return render(request,'notifications/email.html',values)
 
 def previous_week_range(date):
     start_date = date + timedelta(-date.weekday(), weeks=-1)
@@ -18,7 +37,6 @@ def buildWeeklyUpdate():
 	end_date = datetime.combine	(end_date,datetime.max.time())
 	user_data = User.objects.all()
 	for user in user_data.iterator():
-		print('Iam here')
 		req = Request('https://codeforces.com/api/user.rating?handle='+user.codeforces_handle)
 		req.add_header('accept-language','en-US')
 		try:

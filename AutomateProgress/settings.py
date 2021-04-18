@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-import urllib
+import urllib, os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,9 @@ SECRET_KEY = '*brhk-1)^zwsg9e$-=81k5w2x8%3!p9r7^9c+9q=4n-4xjf#%@'
 DEBUG = True
 
 ALLOWED_HOSTS =  ['15.207.100.177','0.0.0.0']
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 # Application definition
 
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'AutomateProgress.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,"templates"),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,3 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreply.bitsandbytes.cp@gmail.com'
+EMAIL_HOST_PASSWORD = 'BitsandBytes@0831'
