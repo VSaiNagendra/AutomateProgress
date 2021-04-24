@@ -6,7 +6,6 @@
   <meta name="format-detection" content="telephone=no"/>
   <link href="{% static 'emailstyle.css' %}" rel="stylesheet">
   <title>Automatic Progress Email Update</title>
-
 </head>
 
 <body topmargin="0" rightmargin="0" bottommargin="0" leftmargin="0" marginwidth="0" marginheight="0" width="100%" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; width: 100%; height: 100%; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%;
@@ -56,8 +55,15 @@
       padding-top: 25px;
       color: #000000;
       font-family: sans-serif;" class="header">
-        Rating updates for Week 3 March 2020 - 4 April 2021
+        Rating updates
     </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%; font-size: 19px; font-weight: bold; line-height: 130%;
+      padding-top: 10px;
+      color: #000000;
+      font-family: sans-serif;">
+      {{ startdate }} - {{ enddate }}
   </tr>
 
   <!-- BITS AND BYTES IMAGE -->
@@ -80,7 +86,7 @@
       padding-top: 5px;
       color: #000000;
       font-family: sans-serif;" class="subheader">
-        Platforms considered - &nbsp;Codeforces.
+        Platforms considered - &nbsp;<a style="text-decoration: none; "href="https://codeforces.com/" Codeforces.>Codeforces </a>
     </td>
   </tr> 
 
@@ -88,7 +94,7 @@
   <!-- Set line color -->
   <tr>  
     <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
-      padding-top: 25px;" class="line"><hr
+      padding-top: 10px;" class="line"><hr
       color="#E0E0E0" align="center" width="100%" size="1" noshade style="margin: 0; padding: 0;" />
     </td>
   </tr>
@@ -98,60 +104,88 @@
     <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%;" class="list-item"><table align="center" border="0" cellspacing="0" cellpadding="0" style="width: inherit; margin: 0; padding: 0; border-collapse: collapse; border-spacing: 0;">
       
       <!-- LIST ITEM -->
+      {% ifnotequal weekratingchanges.count 0 %}
       <tr>
-
-        <!-- LIST ITEM IMAGE -->
-        <!-- Image text color should be opposite to background color. Set your url, image src, alt and title. Alt text should fit the image size. Real image size should be x2 -->
-        <td align="left" valign="top" style="border-collapse: collapse; border-spacing: 0;
-          padding-top: 30px;
-          padding-right: 20px;"><img
-        border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;
-          color: #000000;"
-          src="https://i.postimg.cc/VJmDpJmH/codeforceslogo.png"
-          alt="H" title="Codeforces"
-          width="100" height="50"></td>
 
         <!-- LIST ITEM TEXT -->
         <!-- Set text color and font family ("sans-serif" or "Georgia, serif"). Duplicate all text styles in links, including line-height -->
-        <td align="left" valign="top" style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
+        <td style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
           padding-top: 25px;
           color: #000000;
-          font-family: sans-serif;" class="paragraph">
-            <b style="color: #333333;">Rating changes</b><br/>
-            Tested on the most popular email clients for web, desktop and mobile. Checklist included.
+          font-family: sans-serif;" class="">
+            <b style="color: #333333;">Rating changes in this Week</b><br/>
+            {% for individualchange in weekratingchanges %}
+            <a style="text-decoration: none;" href='https://codeforces.com/profile/{{ individualchange.0 }}' target="_blank">{{ individualchange.0 }}</a>.<br>
+            {% endfor %}
         </td>
-
+        <td align = "right" style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
+          padding-top: 25px;
+          color: #000000;
+          font-family: sans-serif;" class="">
+            <b style="color: #333333;"></b><br/>
+            {% for individualchange in weekratingchanges %}
+            {% if individualchange.1 >= 0 %}
+            <strong align= "right" >+{{ individualchange.1 }}</strong><br>
+            {% else %}
+            <strong align= "right" >{{ individualchange.1 }}</strong><br>
+            {% endif %}
+            {% endfor %}
+        </td>
       </tr>
+      {% endifnotequal %}
 
       <!-- LIST ITEM -->
+      {% ifnotequal maxratinglist.count 0 %}
       <tr>
-
-        <!-- LIST ITEM IMAGE -->
-        <!-- Image text color should be opposite to background color. Set your url, image src, alt and title. Alt text should fit the image size. Real image size should be x2 -->
-        <td align="left" valign="top" style="border-collapse: collapse; border-spacing: 0;
-          padding-top: 30px;
-          padding-right: 20px;"><img
-        border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;
-          color: #000000;"
-          src="https://raw.githubusercontent.com/konsav/email-templates/master/images/list-item.png"
-          alt="D" title="Designer friendly"
-          width="50" height="50"></td>
-
         <!-- LIST ITEM TEXT -->
         <!-- Set text color and font family ("sans-serif" or "Georgia, serif"). Duplicate all text styles in links, including line-height -->
         <td align="left" valign="top" style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
           padding-top: 25px;
           color: #000000;
           font-family: sans-serif;" class="paragraph">
-            <b style="color: #333333;">Designer friendly</b><br/>
-            Sketch app resource file and a&nbsp;bunch of&nbsp;social media icons are&nbsp;also included in&nbsp;GitHub repository.
+            <b style="color: #333333; " align="left" >Max Ratings got in this Week</b><br/>
+            {% for individualrating in weekmaxratings %}
+            <a style="text-decoration: none;" href='https://codeforces.com/profile/{{ individualrating.0 }}' target="_blank">{{ individualrating.0 }}</a>.<br>
+            {% endfor %}
         </td>
-
+        <td align="left" valign="top" style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
+          padding-top: 25px;
+          color: #000000;
+          font-family: sans-serif;" class="paragraph">
+            <b style="color: #333333; " align="left" ></b><br/>
+            {% for individualrating in weekmaxratings %}
+            <strong>{{ individualrating.1 }}</strong><br>
+            {% endfor %}
+        </td>
       </tr>
-
+      {% endifnotequal %}
+      <!-- LIST ITEM -->
+      {% ifnotequal overalltopmaxratings.count 0 %}
+      <tr>
+        <!-- LIST ITEM TEXT -->
+        <!-- Set text color and font family ("sans-serif" or "Georgia, serif"). Duplicate all text styles in links, including line-height -->
+        <td align="left" valign="top" style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
+          padding-top: 25px;
+          color: #000000;
+          font-family: sans-serif;" class="paragraph">
+            <b style="color: #333333;">Top 10 Max Ratings overall</b><br/>
+            {% for individualrating in overalltopmaxratings %}
+            <a style="text-decoration: none;" href='https://codeforces.com/profile/{{ individualrating.0 }}' target="_blank">{{ individualrating.0 }}</a>.<br>
+            {% endfor %}
+        </td>
+        <td align="left" valign="top" style="font-size: 17px; font-weight: 400; line-height: 160%; border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0;
+          padding-top: 25px;
+          color: #000000;
+          font-family: sans-serif;" class="paragraph">
+          <b style="color: #333333;"></b><br/>
+            {% for individualrating in overalltopmaxratings %}
+             <strong>{{ individualrating.1}}</strong><br>
+            {% endfor %}
+        </td>
+      </tr>
+      {% endifnotequal %}
     </table></td>
   </tr>
-
   <!-- LINE -->
   <!-- Set line color -->
   <tr>
@@ -164,15 +198,14 @@
 <tr>
     <td align="center" valign="top" style="border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
       padding-top: 25px;
-      padding-bottom: 5px;" class="button"><a
-      href="https://github.com/konsav/email-templates/" target="_blank" style="text-decoration: underline;">
+      padding-bottom: 5px;" class="button">
         <table border="0" cellpadding="0" cellspacing="0" align="center" style="max-width: 240px; min-width: 120px; border-collapse: collapse; border-spacing: 0; padding: 0;"><tr><td align="center" valign="middle" style="padding: 12px 24px; margin: 0; text-decoration: underline; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
           bgcolor="#E9703E"><a target="_blank" style="text-decoration: underline;
           color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
-          href="https://github.com/konsav/email-templates/">
-            View full list
+          href="https://docs.google.com/forms/d/1024y9PApqv4ml5KD1Ro6CAUvW7RZkQRLTlECuVVP93A/">
+            Add my info
           </a>
-      </td></tr></table></a>
+      </td></tr></table>
     </td>
   </tr>
   <!-- PARAGRAPH -->
@@ -183,7 +216,7 @@
       padding-bottom: 25px;
       color: #000000;
       font-family: sans-serif;" class="paragraph">
-        Have a&nbsp;question?<a href="mailto:sainagendra222@gmail.com" target="_blank" style="color: #127DB3; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 160%;">sainagendra222@gmail.com</a>
+        Have a&nbsp;question?<a href="mailto:sainagendra222@gmail.com" target="_blank" style="color: #127DB3; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 160%;">Drop a mail.</a>
     </td>
   </tr>
 
@@ -203,42 +236,13 @@
       padding-top: 25px;" class="social-icons"><table
       width="256" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse: collapse; border-spacing: 0; padding: 0;">
       <tr>
-
-        <!-- ICON 1 -->
         <td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;"><a target="_blank"
-          href="https://raw.githubusercontent.com/konsav/email-templates/"
+          href="https://github.com/VSaiNagendra/AutomateProgress"
         style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
           color: #000000;"
-          alt="F" title="Facebook"
+          alt="I" title="Github Source Code Contribute"
           width="44" height="44"
-          src="https://raw.githubusercontent.com/konsav/email-templates/master/images/social-icons/facebook.png"></a></td>
-
-        <!-- ICON 2 -->
-        <td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;"><a target="_blank"
-          href="https://raw.githubusercontent.com/konsav/email-templates/"
-        style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-          color: #000000;"
-          alt="T" title="Twitter"
-          width="44" height="44"
-          src="https://raw.githubusercontent.com/konsav/email-templates/master/images/social-icons/twitter.png"></a></td>       
-
-        <!-- ICON 3 -->
-        <td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;"><a target="_blank"
-          href="https://raw.githubusercontent.com/konsav/email-templates/"
-        style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-          color: #000000;"
-          alt="G" title="Google Plus"
-          width="44" height="44"
-          src="https://raw.githubusercontent.com/konsav/email-templates/master/images/social-icons/googleplus.png"></a></td>    
-
-        <!-- ICON 4 -->
-        <td align="center" valign="middle" style="margin: 0; padding: 0; padding-left: 10px; padding-right: 10px; border-collapse: collapse; border-spacing: 0;"><a target="_blank"
-          href="https://raw.githubusercontent.com/konsav/email-templates/"
-        style="text-decoration: none;"><img border="0" vspace="0" hspace="0" style="padding: 0; margin: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: inline-block;
-          color: #000000;"
-          alt="I" title="Instagram"
-          width="44" height="44"
-          src="https://raw.githubusercontent.com/konsav/email-templates/master/images/social-icons/instagram.png"></a></td>
+          src="https://i.postimg.cc/tZzN3F4Z/githublogo.jpg"></a></td>
 
       </tr>
       </table>
@@ -254,7 +258,7 @@
       color: #999999;
       font-family: sans-serif;" class="footer">
 
-        This email template was sent to&nbsp;you becouse we&nbsp;want to&nbsp;make the&nbsp;world a&nbsp;better place. You&nbsp;could change your <a href="https://github.com/konsav/email-templates/" target="_blank" style="text-decoration: underline; color: #999999; font-family: sans-serif; font-size: 13px; font-weight: 400; line-height: 150%;">subscription settings</a> anytime.
+       If you no longer wish to receive this email, or if you are concerned about your data. Reach out to  <a href="mailto:sainagendra222@gmail.com" target="_blank" style="text-decoration: underline; color: #999999; font-family: sans-serif; font-size: 13px; font-weight: 400; line-height: 150%;">email</a> anytime.
 
         <!-- ANALYTICS -->
         <img width="1" height="1" border="0" vspace="0" hspace="0" style="margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;"
