@@ -43,3 +43,8 @@ class MaxRating(models.Model):
 	interviewbit_maxrating = models.IntegerField(default=0)
 	leetcode_handle = models.CharField(max_length=50)
 	leetcode_maxrating = models.IntegerField(default=0)
+
+class EmailNotificationMailingList(models.Model):
+	_objectid = models.ObjectIdField()
+	name = models.CharField(max_length=50)
+	emailid = models.CharField(max_length=50)

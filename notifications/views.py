@@ -12,7 +12,10 @@ from django.core.mail import send_mail
 import time
 check_status = False
 
-
+def buildData(request):
+	buildWeeklyUpdate()
+	buildOverallMaxRatings()
+	return HttpResponse('Build request successful')
 def send_email(request):
 	values = {}
 	# buildWeeklyUpdate()
@@ -38,7 +41,7 @@ def send_email(request):
 	return HttpResponse('Request returned')
 
 def getRatingUpdatesLastWeek():
-	weekobjectqueryset = WeeklyChange.objects.filter(enddate=(date.today()+timedelta(days=-1)))
+	weekobjectqueryset = WeeklyChange.objects.filter(enddate=(date.today()+timedelta(days=-1))).order_by('-_objectid')
 	if(len(weekobjectqueryset)==0):
 		return [], []
 	weekobject = weekobjectqueryset[0]
@@ -53,7 +56,7 @@ def getRatingUpdatesLastWeek():
 
 def getOverallMaxRatings():
 	overalltopmaxratings = []
-	maxratingsqueryset = MaxRating.objects.all()
+	maxratingsqueryset = MaxRating.objects.all().order_by('-_objectid')
 	for individualmaxrating in maxratingsqueryset:
 		overalltopmaxratings.append((individualmaxrating.codeforces_handle,
 			individualmaxrating.codeforces_maxrating))
@@ -97,8 +100,8 @@ def buildWeeklyUpdate():
 	for user in user_data.iterator():
 		req = Request('https://codeforces.com/api/user.rating?handle='+user.codeforces_handle)
 		request_count+=1 
-		if(request_count==5):
-			time.sleep(2)
+		if(request_count==4):
+			time.sleep(5)
 			request_count = 0
 		req.add_header('accept-language','en-US')
 		try:

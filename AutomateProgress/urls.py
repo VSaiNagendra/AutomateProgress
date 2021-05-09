@@ -22,5 +22,5 @@ urlpatterns = [
     path('start/',views.start_view,name = 'start_view'),
     path('run/',views.run_view,name='run_view'),
     path('send/',views.send_email,name='send_email'),
-    path('builddata/',views.buildData,name='builddata')
+    path('builddata/',views.buildData,name='build_data')
 ]
